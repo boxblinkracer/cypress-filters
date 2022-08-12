@@ -17,7 +17,8 @@ npm i cypress-filters --save-dev
 
 ### 2. Add Tags to tests
 
-Just add any tag to the title with "@" as prefix. That's it!
+Just add any tag to the title.
+It is recommended to use a unique prefix such as "@". That's it!
 
 ```javascript 
 it('My super cool test @smoke @usability', () => {
