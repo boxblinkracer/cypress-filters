@@ -1,4 +1,4 @@
-export default class FilterParser {
+class FilterParser {
     /**
      *
      * @param envString
@@ -13,3 +13,5 @@ export default class FilterParser {
         return envString.split(' ');
     }
 }
+
+module.exports = FilterParser;

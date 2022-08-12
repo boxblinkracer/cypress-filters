@@ -1,4 +1,4 @@
-export default class TestTitleValidator {
+class TestTitleValidator {
 
     /**
      *
@@ -11,3 +11,5 @@ export default class TestTitleValidator {
     }
 
 }
+
+module.exports = TestTitleValidator;

@@ -1,9 +1,7 @@
-import TestTitleValidator from "./services/TestTitleValidator";
-
 const FilterParser = require('./services/FilterParser');
 const TestTitleValidator = require('./services/TestTitleValidator');
 
-export default class CypressFilters {
+class CypressFilters {
     /**
      *
      */
@@ -38,7 +36,7 @@ export default class CypressFilters {
             /* eslint-disable no-undef */
             const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
 
-            this.updatePendingState(filters, currentTest);
+            this.updatePendingState(currentTest, filters);
         });
     }
 
@@ -69,3 +67,5 @@ export default class CypressFilters {
         }
     }
 }
+
+module.exports = CypressFilters;

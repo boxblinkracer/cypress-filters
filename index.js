@@ -1,3 +1,3 @@
-import CypressFilters from './src/CypressFilters';
+const CypressFilters = require('./src/CypressFilters');
 
 module.exports = CypressFilters;

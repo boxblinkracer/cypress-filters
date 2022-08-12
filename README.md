@@ -9,13 +9,26 @@
 This plugin helps you to easily filter your Cypress runs based on tags. And yes, super easy and simple!
 And everything in super plain Javascript :)
 
+If tests do not match your filters, then they are simply marked as pending and skipped.
+
 ### 1. Installation
 
 ```ruby 
 npm i cypress-filters --save-dev
 ```
 
-### 2. Add Tags to tests
+### 2. Register Plugin
+
+Just place this line in your `support/e2e.js` file.
+There's nothing more that is required to register the TestRail reporter.
+
+```javascript 
+const CypressFilters = require('cypress-filters');
+
+new CypressFilters().register();
+```
+
+### 3. Add Tags to tests
 
 Just add any tag to the title.
 It is recommended to use a unique prefix such as "@". That's it!
@@ -27,7 +40,7 @@ it('My super cool test @smoke @usability', () => {
 })
 ```
 
-### 3. Run with filters
+### 4. Run with filters
 
 Just run your tests by providing a `filters` environment variable.
 You can simply provide multiple filters based on an OR condition.
