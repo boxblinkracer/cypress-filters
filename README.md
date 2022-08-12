@@ -30,7 +30,7 @@ new CypressFilters().register();
 
 ### 3. Add Tags to tests
 
-Just add any tag to the title.
+Add any tag to the title.
 It is recommended to use a unique prefix such as "@". That's it!
 
 ```javascript 
@@ -42,7 +42,7 @@ it('My super cool test @smoke @usability', () => {
 
 ### 4. Run with filters
 
-Just run your tests by providing a `filters` environment variable.
+Run your tests by providing a `filters` environment variable.
 You can simply provide multiple filters based on an OR condition.
 
 ```bash 
