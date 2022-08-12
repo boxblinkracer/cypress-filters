@@ -5,7 +5,6 @@ class FilterParser {
      * @returns {*}
      */
     getFilters(envString) {
-
         if (envString === '') {
             return [];
         }

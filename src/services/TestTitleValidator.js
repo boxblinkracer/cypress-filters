@@ -1,5 +1,4 @@
 class TestTitleValidator {
-
     /**
      *
      * @param testTitle
@@ -9,7 +8,6 @@ class TestTitleValidator {
     hasFilter(testTitle, filters) {
         return filters.some((tag) => testTitle.includes(tag));
     }
-
 }
 
 module.exports = TestTitleValidator;

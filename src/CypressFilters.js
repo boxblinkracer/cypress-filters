@@ -16,7 +16,6 @@ class CypressFilters {
     register() {
         /* eslint-disable no-undef */
         beforeEach(() => {
-
             // grab our filters
             /* eslint-disable no-undef */
             const filtersString = Cypress.env('filters');
@@ -46,7 +45,6 @@ class CypressFilters {
      * @param filters
      */
     updatePendingState(test, filters) {
-
         const runTest = this.titleValidator.hasFilter(test.fullTitle(), filters);
 
         // we start with our lowest level
