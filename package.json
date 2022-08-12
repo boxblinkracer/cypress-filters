@@ -1,6 +1,6 @@
 {
     "name": "cypress-filters",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "Easy filtering for Cypress tests",
     "main": "index.js",
     "private": false,
