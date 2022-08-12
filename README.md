@@ -20,7 +20,7 @@ npm i cypress-filters --save-dev
 ### 2. Register Plugin
 
 Just place this line in your `support/e2e.js` file.
-There's nothing more that is required to register the TestRail reporter.
+
 
 ```javascript 
 const CypressFilters = require('cypress-filters');
