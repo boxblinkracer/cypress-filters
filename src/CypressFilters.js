@@ -1,8 +1,6 @@
 const FilterParser = require('./services/FilterParser');
 
-
 export default class CypressFilters {
-
     /**
      *
      */
@@ -14,10 +12,11 @@ export default class CypressFilters {
      *
      */
     register() {
-
+        /* eslint-disable no-undef */
         beforeEach(() => {
 
             // grab our filters
+            /* eslint-disable no-undef */
             const filtersString = Cypress.env('filters');
 
             // we don't have any tags
@@ -32,7 +31,7 @@ export default class CypressFilters {
                 return;
             }
 
-
+            /* eslint-disable no-undef */
             const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
 
             this.updatePendingState(filters, currentTest);
@@ -45,7 +44,6 @@ export default class CypressFilters {
      * @param filters
      */
     updatePendingState(test, filters) {
-
         const runTest = filters.some((tag) => test.fullTitle().includes(tag));
 
         // we start with our lowest level
@@ -62,8 +60,7 @@ export default class CypressFilters {
         }
 
         if (test.parent !== undefined) {
-            this.updatePendingState(test.parent, filters)
+            this.updatePendingState(test.parent, filters);
         }
     }
-
 }

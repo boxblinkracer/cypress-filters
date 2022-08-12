@@ -1,5 +1,4 @@
 export default class FilterParser {
-
     /**
      *
      * @param envString
@@ -8,5 +7,4 @@ export default class FilterParser {
     getFilters(envString) {
         return envString.split(' ');
     }
-
 }
