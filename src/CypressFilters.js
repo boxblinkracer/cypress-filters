@@ -1,4 +1,7 @@
+import TestTitleValidator from "./services/TestTitleValidator";
+
 const FilterParser = require('./services/FilterParser');
+const TestTitleValidator = require('./services/TestTitleValidator');
 
 export default class CypressFilters {
     /**
@@ -6,6 +9,7 @@ export default class CypressFilters {
      */
     constructor() {
         this.filterParser = new FilterParser();
+        this.titleValidator = new TestTitleValidator();
     }
 
     /**
@@ -44,7 +48,8 @@ export default class CypressFilters {
      * @param filters
      */
     updatePendingState(test, filters) {
-        const runTest = filters.some((tag) => test.fullTitle().includes(tag));
+
+        const runTest = this.titleValidator.hasFilter(test.fullTitle(), filters);
 
         // we start with our lowest level
         // then we check our parent suites and groups,
