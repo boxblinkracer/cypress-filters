@@ -5,6 +5,11 @@ export default class FilterParser {
      * @returns {*}
      */
     getFilters(envString) {
+
+        if (envString === '') {
+            return [];
+        }
+
         return envString.split(' ');
     }
 }
