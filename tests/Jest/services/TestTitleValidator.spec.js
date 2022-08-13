@@ -27,3 +27,11 @@ test('single filter found if multiple exist', () => {
     );
     expect(hasFilter).toBe(true);
 });
+
+test('empty filter list but not found in title', () => {
+    const hasFilter = validator.hasFilter(
+        'This is my title @smoke',
+        []
+    );
+    expect(hasFilter).toBe(false);
+});

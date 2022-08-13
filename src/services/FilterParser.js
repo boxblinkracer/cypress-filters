@@ -5,6 +5,13 @@ class FilterParser {
      * @returns {*}
      */
     getFilters(envString) {
+
+        if (envString === null) {
+            return [];
+        }
+
+        envString = envString.trim();
+
         if (envString === '') {
             return [];
         }
