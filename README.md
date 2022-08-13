@@ -43,7 +43,8 @@ it('My super cool test @smoke @usability', () => {
 ### 4. Run with filters
 
 Run your tests by providing a `filters` environment variable.
-You can simply provide multiple filters based on an OR condition.
+
+You can provide multiple filters based on a combination of OR and AND conditions.
 
 ```bash 
 # run with 1 tag
