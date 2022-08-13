@@ -1,22 +1,36 @@
+const FilterConfiguration = require('../models/FilterConfiguration');
+
 class FilterParser {
     /**
      *
      * @param envString
-     * @returns {*}
+     * @returns {FilterConfiguration}
      */
     getFilters(envString) {
-
         if (envString === null) {
-            return [];
+            return new FilterConfiguration([], []);
         }
 
         envString = envString.trim();
 
         if (envString === '') {
-            return [];
+            return new FilterConfiguration([], []);
         }
 
-        return envString.split(' ');
+        const allParts = envString.split(' ');
+
+        const filtersOr = [];
+
+        allParts.forEach((filter) => {
+            if (filter.includes('+')) {
+                const partsAnd = filter.split('+');
+                filtersOr.push(partsAnd);
+            } else {
+                filtersOr.push([filter]);
+            }
+        });
+
+        return new FilterConfiguration(filtersOr);
     }
 }
 

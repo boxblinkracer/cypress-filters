@@ -1,37 +1,60 @@
 import TestTitleValidator from '../../../src/services/TestTitleValidator';
+import FilterConfiguration from '../../../src/models/FilterConfiguration';
 
 
 const validator = new TestTitleValidator();
 
 
-test('filter found in title', () => {
-    const hasFilter = validator.hasFilter(
+test('valid with 1 OR filter', () => {
+    const hasFilter = validator.isValid(
         'This is my title @smoke',
-        ['@smoke']
+        new FilterConfiguration([
+            ['@smoke'],
+        ])
     );
     expect(hasFilter).toBe(true);
 });
 
-test('filter not found in title', () => {
-    const hasFilter = validator.hasFilter(
-        'This is my title @smoke',
-        ['@smoke123']
+test('not valid with 2 OR filters', () => {
+    const hasFilter = validator.isValid(
+        'This is my title @functional',
+        new FilterConfiguration([
+            ['@regression'],
+            ['@smoke'],
+        ])
     );
     expect(hasFilter).toBe(false);
 });
 
-test('single filter found if multiple exist', () => {
-    const hasFilter = validator.hasFilter(
+test('valid with 1 of 2 OR filters', () => {
+    const hasFilter = validator.isValid(
         'This is my title @smoke',
-        ['@regression', '@smoke']
+        new FilterConfiguration([
+            ['@regression'],
+            ['@smoke'],
+        ])
     );
     expect(hasFilter).toBe(true);
 });
 
-test('empty filter list but not found in title', () => {
-    const hasFilter = validator.hasFilter(
-        'This is my title @smoke',
-        []
+test('valid with 1 of 2 AND filters', () => {
+    const hasFilter = validator.isValid(
+        'This is my title @smoke @regression',
+        new FilterConfiguration([
+            ['@core', '@usability'],
+            ['@smoke', '@regression'],
+        ])
+    );
+    expect(hasFilter).toBe(true);
+});
+
+test('not valid with AND filters', () => {
+    const hasFilter = validator.isValid(
+        'This is my title @smoke @functional',
+        new FilterConfiguration([
+            ['@smoke', '@regression'],
+            ['@usability', '@functional'],
+        ])
     );
     expect(hasFilter).toBe(false);
 });

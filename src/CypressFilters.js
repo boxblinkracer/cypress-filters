@@ -26,26 +26,26 @@ class CypressFilters {
                 return;
             }
 
-            const filters = this.filterParser.getFilters(filtersString);
+            const filterConfig = this.filterParser.getFilters(filtersString);
 
-            if (filters.length <= 0) {
+            if (!filterConfig.hasFilters()) {
                 return;
             }
 
             /* eslint-disable no-undef */
             const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
 
-            this.updatePendingState(currentTest, filters);
+            this.updatePendingState(currentTest, filterConfig);
         });
     }
 
     /**
      *
      * @param test
-     * @param filters
+     * @param filterConfig
      */
-    updatePendingState(test, filters) {
-        const runTest = this.titleValidator.hasFilter(test.fullTitle(), filters);
+    updatePendingState(test, filterConfig) {
+        const runTest = this.titleValidator.isValid(test.fullTitle(), filterConfig);
 
         // we start with our lowest level
         // then we check our parent suites and groups,
@@ -61,7 +61,7 @@ class CypressFilters {
         }
 
         if (test.parent !== undefined) {
-            this.updatePendingState(test.parent, filters);
+            this.updatePendingState(test.parent, filterConfig);
         }
     }
 }

@@ -2,11 +2,27 @@ class TestTitleValidator {
     /**
      *
      * @param testTitle
-     * @param filters
-     * @returns {*}
+     * @param filterConfig
+     * @returns {boolean}
      */
-    hasFilter(testTitle, filters) {
-        return filters.some((tag) => testTitle.includes(tag));
+    isValid(testTitle, filterConfig) {
+        let groupMatched = false;
+
+        filterConfig.getFilters().forEach((filterGroup) => {
+            let allAndMatched = true;
+
+            filterGroup.forEach((filterAnd) => {
+                if (!testTitle.includes(filterAnd)) {
+                    allAndMatched = false;
+                }
+            });
+
+            if (allAndMatched) {
+                groupMatched = true;
+            }
+        });
+
+        return groupMatched;
     }
 }
 

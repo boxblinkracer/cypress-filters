@@ -47,10 +47,19 @@ You can simply provide multiple filters based on an OR condition.
 
 ```bash 
 # run with 1 tag
-./node_modules/.bin/cypress run --env filters="@smoke"
+cypress run --env filters="@smoke"
 
-# run with 2 tags (OR condition by default)
-./node_modules/.bin/cypress run --env filters="@smoke @usability"
+# run with 2 tags (OR condition)
+cypress run --env filters="@smoke @usability"
+
+# run with 2 tags (AND condition)
+cypress run --env filters="@smoke+@usability"
+
+# run with 3 tags (AND + OR condition)
+cypress run --env filters="@smoke+@usability @regression"
+
+# run with 4 tags (2x AND condition)
+cypress run --env filters="@smoke+@usability @regression+@functional"
 ```
 
 ### Copying / License
