@@ -15,37 +15,52 @@ class CypressFilters {
      */
     register() {
         /* eslint-disable no-undef */
+        before(() => {
+            // we also need this hook to support
+            // global before() entries in our test files
+            this._processCurrentTest();
+        });
+
+        /* eslint-disable no-undef */
         beforeEach(() => {
-            // grab our filters
-            /* eslint-disable no-undef */
-            const filtersString = Cypress.env('filters');
-
-            // we don't have any tags
-            // then leave the test as it is
-            if (!filtersString) {
-                return;
-            }
-
-            const filterConfig = this.filterParser.getFilters(filtersString);
-
-            if (!filterConfig.hasFilters()) {
-                return;
-            }
-
-            /* eslint-disable no-undef */
-            const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
-
-            this.updatePendingState(currentTest, filterConfig);
+            this._processCurrentTest();
         });
     }
 
     /**
      *
-     * @param test
-     * @param filterConfig
+     * @private
      */
-    updatePendingState(test, filterConfig) {
-        const runTest = this.titleValidator.isValid(test.fullTitle(), filterConfig);
+    _processCurrentTest() {
+        // grab our filters
+        /* eslint-disable no-undef */
+        const filtersString = Cypress.env('filters');
+
+        // we don't have any tags
+        // then leave the test as it is
+        if (!filtersString) {
+            return;
+        }
+
+        const filters = this.filterParser.getFilters(filtersString);
+
+        if (filters.length <= 0) {
+            return;
+        }
+
+        /* eslint-disable no-undef */
+        const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
+
+        this.updatePendingState(currentTest, filters);
+    }
+
+    /**
+     *
+     * @param test
+     * @param filters
+     */
+    updatePendingState(test, filters) {
+        const runTest = this.titleValidator.hasFilter(test.fullTitle(), filters);
 
         // we start with our lowest level
         // then we check our parent suites and groups,
@@ -61,7 +76,7 @@ class CypressFilters {
         }
 
         if (test.parent !== undefined) {
-            this.updatePendingState(test.parent, filterConfig);
+            this.updatePendingState(test.parent, filters);
         }
     }
 }
