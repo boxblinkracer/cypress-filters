@@ -14,16 +14,18 @@ class CypressFilters {
      *
      */
     register() {
+        const me = this;
+
         /* eslint-disable no-undef */
         before(() => {
             // we also need this hook to support
             // global before() entries in our test files
-            this._processCurrentTest();
+            me._processCurrentTest.bind(me);
         });
 
         /* eslint-disable no-undef */
         beforeEach(() => {
-            this._processCurrentTest();
+            me._processCurrentTest.bind(me);
         });
     }
 
