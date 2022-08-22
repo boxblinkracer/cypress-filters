@@ -40,6 +40,20 @@ it('My super cool test @smoke @usability', () => {
 })
 ```
 
+You can also combine multiple tests within a context or description.
+Just add the filter tag to that title.
+
+```javascript 
+describe('Smoke Tests @smoke', () => {
+
+    it('test 1', () => { ... })
+    
+    it('test 2', () => { ... })
+    
+    it('test 3', () => { ... })
+})
+```
+
 ### 4. Run with filters
 
 Run your tests by providing a `filters` environment variable.
@@ -63,6 +77,3 @@ cypress run --env filters="@smoke+@usability @regression"
 cypress run --env filters="@smoke+@usability @regression+@functional"
 ```
 
-### Copying / License
-
-This repository is distributed under the MIT License (MIT). You can find the whole license text in the [LICENSE](LICENSE) file.
