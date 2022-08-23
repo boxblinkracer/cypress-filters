@@ -40,19 +40,6 @@ it('My super cool test @smoke @usability', () => {
 })
 ```
 
-You can also combine multiple tests within a context or description.
-Just add the filter tag to that title.
-
-```javascript 
-describe('Smoke Tests @smoke', () => {
-
-    it('test 1', () => { ... })
-    
-    it('test 2', () => { ... })
-    
-    it('test 3', () => { ... })
-})
-```
 
 ### 4. Run with filters
 
