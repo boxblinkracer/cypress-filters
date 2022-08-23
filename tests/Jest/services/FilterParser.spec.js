@@ -19,6 +19,11 @@ test('null filter string leads to empty list', () => {
     expect(filterConfig.hasFilters()).toBe(false);
 });
 
+test('undefined filter string leads to empty list', () => {
+    const filterConfig = parser.getFilters(undefined);
+    expect(filterConfig.hasFilters()).toBe(false);
+});
+
 test('simple space string leads to empty list', () => {
     const filterConfig = parser.getFilters(' ');
     expect(filterConfig.hasFilters()).toBe(false);

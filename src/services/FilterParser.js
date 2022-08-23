@@ -7,7 +7,7 @@ class FilterParser {
      * @returns {FilterConfiguration}
      */
     getFilters(envString) {
-        if (envString === null) {
+        if (envString === undefined || envString === null) {
             return new FilterConfiguration([], []);
         }
 
