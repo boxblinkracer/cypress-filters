@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2]
+
+### Fixed
+
+- Fix broken filters in combination with beforeAll hooks
+
 ## [1.2.1]
 
 ### Fixed
