@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.3]
+
+### Changed
+
+- Improved FilterParser for undefined values
+
+### Fixed
+
+- Fix problem with empty filters list in latest release
+
 ## [1.2.2]
 
 ### Fixed
