@@ -14,7 +14,9 @@ class CypressFilters {
      *
      */
     register() {
-        this.filterConfig = this._getFiltersConfig();
+        /* eslint-disable no-undef */
+        const filtersString = Cypress.env('filters');
+        this.filterConfig = this.filterParser.getFilters(filtersString);
 
         if (!this.filterConfig.hasFilters()) {
             return;
@@ -41,31 +43,6 @@ class CypressFilters {
 
             me._updatePendingState(me, currentTest, me.filterConfig);
         });
-    }
-
-    /**
-     *
-     * @returns {FilterConfiguration|*[]}
-     * @private
-     */
-    _getFiltersConfig() {
-        // grab our filters
-        /* eslint-disable no-undef */
-        const filtersString = Cypress.env('filters');
-
-        // we don't have any tags
-        // then leave the test as it is
-        if (!filtersString) {
-            return [];
-        }
-
-        const filters = this.filterParser.getFilters(filtersString);
-
-        if (filters.length <= 0) {
-            return [];
-        }
-
-        return filters;
     }
 
     /**
