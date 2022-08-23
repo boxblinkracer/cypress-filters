@@ -6,34 +6,49 @@ class CypressFilters {
      *
      */
     constructor() {
-        this.filterParser = new FilterParser();
         this.titleValidator = new TestTitleValidator();
+        this.filterParser = new FilterParser();
     }
 
     /**
      *
      */
     register() {
+        this.filterConfig = this._getFiltersConfig();
+
+        if (!this.filterConfig.hasFilters()) {
+            return;
+        }
+
         const me = this;
 
         /* eslint-disable no-undef */
         before(() => {
-            // we also need this hook to support
-            // global before() entries in our test files
-            me._processCurrentTest.bind(me);
+            /* eslint-disable no-undef */
+            const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
+
+            // the before will contain the title of the current test
+            // we can immediately check it here and cancel the beforeAll process
+            const runTest = me.titleValidator.isValid(currentTest.title, me.filterConfig);
+
+            currentTest.pending = !runTest;
         });
 
         /* eslint-disable no-undef */
         beforeEach(() => {
-            me._processCurrentTest.bind(me);
+            /* eslint-disable no-undef */
+            const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
+
+            me._updatePendingState(me, currentTest, me.filterConfig);
         });
     }
 
     /**
      *
+     * @returns {FilterConfiguration|*[]}
      * @private
      */
-    _processCurrentTest() {
+    _getFiltersConfig() {
         // grab our filters
         /* eslint-disable no-undef */
         const filtersString = Cypress.env('filters');
@@ -41,19 +56,16 @@ class CypressFilters {
         // we don't have any tags
         // then leave the test as it is
         if (!filtersString) {
-            return;
+            return [];
         }
 
         const filters = this.filterParser.getFilters(filtersString);
 
         if (filters.length <= 0) {
-            return;
+            return [];
         }
 
-        /* eslint-disable no-undef */
-        const currentTest = Cypress.mocha.getRunner().suite.ctx.currentTest;
-
-        this.updatePendingState(currentTest, filters);
+        return filters;
     }
 
     /**
@@ -61,8 +73,8 @@ class CypressFilters {
      * @param test
      * @param filters
      */
-    updatePendingState(test, filters) {
-        const runTest = this.titleValidator.hasFilter(test.fullTitle(), filters);
+    _updatePendingState(me, test, filters) {
+        const runTest = me.titleValidator.isValid(test.fullTitle(), filters);
 
         // we start with our lowest level
         // then we check our parent suites and groups,
@@ -78,7 +90,7 @@ class CypressFilters {
         }
 
         if (test.parent !== undefined) {
-            this.updatePendingState(test.parent, filters);
+            me._updatePendingState(me, test.parent, filters);
         }
     }
 }
