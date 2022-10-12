@@ -1,11 +1,13 @@
 {
     "name": "cypress-filters",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "Easy filtering for Cypress tests",
     "main": "index.js",
     "private": false,
     "keywords": [
-        "cypress"
+        "cypress",
+        "filter",
+        "tag"
     ],
     "author": {
         "name": "Christian Dangl"
