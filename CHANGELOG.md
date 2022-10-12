@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.4]
+
+### Added
+
+- Added new hasFilter("...") function in CypressFilter. You can use this if you want to customize behaviour and skip specific actions such as before() hooks.
+
 ## [1.2.3]
 
 ### Changed

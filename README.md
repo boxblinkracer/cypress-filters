@@ -64,3 +64,30 @@ cypress run --env filters="@smoke+@usability @regression"
 cypress run --env filters="@smoke+@usability @regression+@functional"
 ```
 
+
+## Advanced
+
+### 1. Conditional Tests with Filters
+Sometimes it's necessary to completely skip things such as before() or beforeEach() hooks if run with some tags.
+
+Let's imagine you test a payment plugin that requires an API key.
+But this key is not always available. Still, a handful of tests should still be executed.
+Let's tag those with the filter "@core".
+Depending on your setup, you might have some before() hooks that prepare the payment methods.
+But these are not existing without a valid API key.
+You can easily skip that before() hook with the following code.
+
+```javascript 
+before(function () {
+
+    if (new CypressFilters().hasFilter("@core")) {
+        return;
+    }
+    
+    // ...
+    // ...
+}
+```
+
+Please keep in mind, this is only an idea to get you started.
+This feature allows you to completely customize your logic based on tag conditions.

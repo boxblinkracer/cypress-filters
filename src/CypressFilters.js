@@ -2,6 +2,8 @@ const FilterParser = require('./services/FilterParser');
 const TestTitleValidator = require('./services/TestTitleValidator');
 
 class CypressFilters {
+    static alreadyRegistered = false;
+
     /**
      *
      */
@@ -14,11 +16,14 @@ class CypressFilters {
      *
      */
     register() {
-        /* eslint-disable no-undef */
-        const filtersString = Cypress.env('filters');
-        this.filterConfig = this.filterParser.getFilters(filtersString);
+        this._loadFilters();
 
         if (!this.filterConfig.hasFilters()) {
+            return;
+        }
+
+        // if we are already registered, then skip this part
+        if (CypressFilters.alreadyRegistered) {
             return;
         }
 
@@ -43,6 +48,33 @@ class CypressFilters {
 
             me._updatePendingState(me, currentTest, me.filterConfig);
         });
+
+        CypressFilters.alreadyRegistered = true;
+    }
+
+    /**
+     *
+     * @param filter
+     */
+    hasFilter(filter) {
+        this._loadFilters();
+
+        if (!this.filterConfig.hasFilters()) {
+            return false;
+        }
+        const allowTestRun = this.titleValidator.isValid(filter, this.filterConfig);
+
+        return allowTestRun;
+    }
+
+    /**
+     *
+     * @private
+     */
+    _loadFilters() {
+        /* eslint-disable no-undef */
+        const filtersString = Cypress.env('filters');
+        this.filterConfig = this.filterParser.getFilters(filtersString);
     }
 
     /**
